@@ -22,5 +22,6 @@ Route::post('pass','verify\VerifyController@pass');
 Route::post('reject','verify\VerifyController@reject');
 Route::get('status','company\CompanyController@status');
 
-Route::get('show','company\CompanyController@show')->middleware('token');
+Route::get('show','company\CompanyController@show')->middleware(['token','verify']);
 Route::post('accessToken','verify\VerifyController@accessToken');
+Route::get('getIp','verify\VerifyController@getIp');

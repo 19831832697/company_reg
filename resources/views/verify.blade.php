@@ -25,7 +25,7 @@
         <td>{{$v->company_user}}</td>
         <td>{{$v->company_account}}</td>
         <td>{{$v->company_pub}}</td>
-        {{--<td><img src="" alt=""></td>--}}
+        {{--<td><img src="file:///Z:/laravel/storage/app/{{$v->company_img}}" alt=""></td>--}}
         <td>
             <a href="javascript:;" class="pass" id="{{$v->company_id}}">通过</a>||
             <a href="javascript:;" class="reject" id="{{$v->company_id}}">驳回</a>

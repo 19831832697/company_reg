@@ -82,7 +82,7 @@ class CompanyController extends Controller
         }
     }
     /**
-     * 生成AccessToken
+     * 调用AccessToken
      */
     public function show(){
         $appid="cOp40jNNOZprHMHLgqjN";
@@ -100,6 +100,12 @@ class CompanyController extends Controller
         curl_setopt($ch,CURLOPT_POSTFIELDS,$data);
         curl_setopt($ch,CURLOPT_HTTPHEADER,['Content-Type:text/plain']);
         $res=curl_exec($ch);
+        $u_key="$appid"."token";
+        $token=Redis::get($u_key);
+        if(empty($token)){
+            Redis::set($u_key,$res);
+            Redis::expire($key,20);
+        }
         echo $res;
     }
 }

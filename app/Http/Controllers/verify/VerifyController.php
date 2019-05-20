@@ -94,7 +94,7 @@ class VerifyController extends Controller
         $data=json_decode($arrInfo,true);
         $appid=$data['appid'];
         $app_key=$data['key'];
-        $key="$appid";
+        $key="ip:".$_SERVER['REMOTE_ADDR']."token$appid";
         $token=Redis::get($key);
         if(empty($token)){
             $access="$app_key".rand(100000,999999);
