@@ -28,10 +28,10 @@ Route::get('u_status','company\CompanyController@u_status');
 //生成AccessToken  中间件验证请求次数
 Route::get('show','company\CompanyController@show')->middleware(['token','verify']);
 Route::post('accessToken','verify\PortController@accessToken');
-//获取主机ip
-//Route::post('ip','company\CompanyController@ip');
+//获取主机ip,ua,用户注册信息
 Route::post('getIp','verify\PortController@getIp');
 Route::post('getUa','verify\PortController@getUa');
+Route::get('getRegInfo','verify\PortController@getRegInfo');
 Route::get('aa','verify\PortController@aa')->middleware('token');
 
 Auth::routes();

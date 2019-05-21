@@ -20,7 +20,7 @@ class Token
         $url_hash=substr($_SERVER['REQUEST_URI'],0,10);
         $redis_key='api:filter:url:'.$url_hash;
         //一分钟请求20次
-        $incr=Redis::incr($redis_key); //自增
+        Redis::incr($redis_key); //自增
         Redis::expire($redis_key,60);//过期时间
         $num=Redis::get($redis_key);
 
