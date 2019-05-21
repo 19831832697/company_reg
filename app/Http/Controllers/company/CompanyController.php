@@ -63,6 +63,14 @@ class CompanyController extends Controller
 
     /**
      * 查看审核状态
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function u_status(){
+        return view('status');
+    }
+
+    /**
+     * 查看审核状态
      */
     public function status(){
         $ip=$_SERVER['REMOTE_ADDR'];
@@ -71,16 +79,18 @@ class CompanyController extends Controller
             $appid=$data->appid;
             $key=$data->key;
             if(!empty($appid) && !empty($key)){
-                echo "审核通过";echo "<br/>";
-                echo "APPID:".$appid;
-                echo "<br/>";
-                echo "key:".$key;
+                $dataInfo=[
+                    'appid'=>$appid,
+                    'key'=>$key
+                ];
+                return json_encode($dataInfo);
             }else{
                 echo "审核中";
             }
 
         }
     }
+
     /**
      * 调用AccessToken
      */
@@ -108,4 +118,17 @@ class CompanyController extends Controller
         }
         echo $res;
     }
+
+    /**
+     * 获取主机ip
+     */
+//    public function ip(){
+//        $url="http://vm.laravel.com/getIp";
+//        $ch=curl_init($url);
+//        curl_setopt($ch,CURLOPT_URL,$url);
+//        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+//        curl_setopt($ch,CURLOPT_POST,1);
+//        $res=curl_exec($ch);
+//        echo $res;
+//    }
 }

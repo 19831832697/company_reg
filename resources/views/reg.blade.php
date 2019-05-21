@@ -8,7 +8,7 @@
     <title>Document</title>
 </head>
 <body>
-<h1><a href="/status">查看审核状态</a></h1>
+<h1><a href="/u_status">查看审核状态</a></h1>
 <form action="companyDo" method="post" enctype="multipart/form-data">
     <p>
         公司名称:<input type="text" name="company_name">

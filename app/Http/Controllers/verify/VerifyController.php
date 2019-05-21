@@ -103,4 +103,12 @@ class VerifyController extends Controller
         }
         return $key;
     }
+
+    /**
+     * 获取主机ip
+     */
+    public function getIp(){
+        $ip=$_SERVER['REMOTE_ADDR'];
+        return json_encode($ip,256);
+    }
 }
