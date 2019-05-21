@@ -38,7 +38,8 @@ class VerifyController extends Controller
         if(empty($appid) || empty($key)){
             $updateInfo=[
                 'appid'=>$app_id,
-                'key'=>$u_key
+                'key'=>$u_key,
+                'status'=>2
             ];
             $dataInfo=DB::table('api')->where($where)->update($updateInfo);
             if($dataInfo){
@@ -83,32 +84,5 @@ class VerifyController extends Controller
             ];
             return json_encode($res,JSON_UNESCAPED_UNICODE);
         }
-    }
-
-    /**
-     * 生成accessToken
-     * @return string
-     */
-    public function accessToken(){
-        $arrInfo=file_get_contents("php://input");
-        $data=json_decode($arrInfo,true);
-        $appid=$data['appid'];
-        $app_key=$data['key'];
-        $key="ip:".$_SERVER['REMOTE_ADDR']."token$appid";
-        $token=Redis::get($key);
-        if(empty($token)){
-            $access="$app_key".rand(100000,999999);
-            Redis::set($key,$access);
-            Redis::expire($key,3600);
-        }
-        return $key;
-    }
-
-    /**
-     * 获取主机ip
-     */
-    public function getIp(){
-        $ip=$_SERVER['REMOTE_ADDR'];
-        return json_encode($ip,256);
     }
 }

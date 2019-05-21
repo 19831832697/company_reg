@@ -15,6 +15,7 @@
         <td>公司法人</td>
         <td>公司账户</td>
         <td>对公账号</td>
+        <td>状态</td>
         {{--<td>营业执照</td>--}}
         <td>操作</td>
     </tr>
@@ -25,6 +26,13 @@
         <td>{{$v->company_user}}</td>
         <td>{{$v->company_account}}</td>
         <td>{{$v->company_pub}}</td>
+        <td>
+            @if($v->status==1)
+                审核中
+            @elseif($v->status==2)
+                审核通过
+            @endif
+        </td>
         {{--<td><img src="file:///Z:/laravel/storage/app/{{$v->company_img}}" alt=""></td>--}}
         <td>
             <a href="javascript:;" class="pass" id="{{$v->company_id}}">通过</a>||

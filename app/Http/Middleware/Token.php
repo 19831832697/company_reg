@@ -17,16 +17,16 @@ class Token
      */
     public function handle($request, Closure $next)
     {
-        $key="ip:".$_SERVER['REMOTE_ADDR']."HTTP_USER_AGENT:".$_SERVER['HTTP_USER_AGENT']."token"."$request->input('token')";
+        $url_hash=substr($_SERVER['REQUEST_URI'],0,10);
+        $redis_key='api:filter:url:'.$url_hash;
+        //一分钟请求20次
+        $incr=Redis::incr($redis_key); //自增
+        Redis::expire($redis_key,60);//过期时间
+        $num=Redis::get($redis_key);
 
-        $num=Redis::get($key);
-
-        Redis::incr($key);
-
-        if($num>=5){
+        if($num>20){
             die("调用频繁，请一分钟后重试");
         }
-        Redis::expire($key,20);
         return $next($request);
     }
 }

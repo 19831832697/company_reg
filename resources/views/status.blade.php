@@ -21,8 +21,8 @@
 
     </tr>
     </tbody>
-    <input type="button" value="获取主机ip：" id="ip"><br/>
-    <input type="button" value="获取UA：" id="ua">
+    {{--<input type="button" value="获取主机ip：" id="ip"><br/>--}}
+    {{--<input type="button" value="获取UA：" id="ua">--}}
 
 </table>
 </body>
@@ -40,15 +40,15 @@
             }
         })
         //获取主机ip
-        $(document).on('click','#ip',function(){
-            $.ajax({
-                url:"/ip",
-                method:"post",
-                dataType:"json",
-                success:function(data){
-                    $('#ip').append(data);
-                }
-            })
-        })
+        // $(document).on('click','#ip',function(){
+        //     $.ajax({
+        //         url:"/ip",
+        //         method:"post",
+        //         dataType:"json",
+        //         success:function(data){
+        //             $('#ip').append(data);
+        //         }
+        //     })
+        // })
     })
 </script>

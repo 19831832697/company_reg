@@ -4,10 +4,12 @@ namespace App\Http\Controllers\company;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
+
 
 class CompanyController extends Controller
 {
@@ -25,20 +27,21 @@ class CompanyController extends Controller
      */
     public function companyDo(Request $request)
     {
+        $uid=Auth::id();
         $company_name = $request->input('company_name');
         $company_user = $request->input('company_user');
         $company_account = $request->input('company_account');
         $company_pub = $request->input('company_pub');
         $company_img = $request->input('company_img');
         $company_img=$this->img($request,'company_img');
-        $ip=$_SERVER['REMOTE_ADDR'];
+//        $ip=$_SERVER['REMOTE_ADDR'];
         $data=[
             'company_name'=>$company_name,
             'company_user'=>$company_user,
             'company_account'=>$company_account,
             'company_pub'=>$company_pub,
             'company_img'=>$company_img,
-            'ip'=>$ip
+            'uid'=>$uid
         ];
         $data = DB::table('api')->insert($data);
         if($data){
@@ -73,8 +76,8 @@ class CompanyController extends Controller
      * 查看审核状态
      */
     public function status(){
-        $ip=$_SERVER['REMOTE_ADDR'];
-        $data=DB::table('api')->where('ip',$ip)->first();
+        $uid=Auth::id();
+        $data=DB::table('api')->where('uid',$uid)->first();
         if($data){
             $appid=$data->appid;
             $key=$data->key;
@@ -95,8 +98,8 @@ class CompanyController extends Controller
      * 调用AccessToken
      */
     public function show(){
-        $appid="cOp40jNNOZprHMHLgqjN";
-        $key="zkWXJJLvwmn14f802e1fba977727845e8872c1743a7";
+        $appid="Pp15UeWBYcX2KHpFfusl";
+        $key="3XyKztlyD9K14f802e1fba977727845e8872c1743a7";
         $dataInfo=[
             'appid'=>$appid,
             'key'=>$key
@@ -118,17 +121,4 @@ class CompanyController extends Controller
         }
         echo $res;
     }
-
-    /**
-     * 获取主机ip
-     */
-//    public function ip(){
-//        $url="http://vm.laravel.com/getIp";
-//        $ch=curl_init($url);
-//        curl_setopt($ch,CURLOPT_URL,$url);
-//        curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-//        curl_setopt($ch,CURLOPT_POST,1);
-//        $res=curl_exec($ch);
-//        echo $res;
-//    }
 }
