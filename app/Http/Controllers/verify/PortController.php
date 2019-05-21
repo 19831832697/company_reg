@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Str;
 
 class PortController extends Controller
 {
@@ -72,7 +73,6 @@ class PortController extends Controller
             return json_encode($res,JSON_UNESCAPED_UNICODE);
         }
         $info=DB::table('api')->where('appid',$appid)->first();
-
         if($info){
             if($info->key == $app_key){
                 $key="ip:".$_SERVER['REMOTE_ADDR']."token$appid";
@@ -85,7 +85,7 @@ class PortController extends Controller
                     ];
                     return json_encode($res,JSON_UNESCAPED_UNICODE);
                 }else{
-                    $access_token=(md5(str::random(20)));
+                    $access_token=(md5(Str::random(20)));
                     $key="list_token";
                     Redis::sadd($key,$access_token);
                     Redis::expire($key,3600);

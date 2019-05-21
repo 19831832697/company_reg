@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 //注册  注册执行
-Route::get('company','company\CompanyController@company');
+Route::get('company','company\CompanyController@company')->middleware('auth');
 Route::post('companyDo','company\CompanyController@companyDo');
 //后台审核
 Route::get('audit','verify\VerifyController@audit');
@@ -26,13 +26,16 @@ Route::post('reject','verify\VerifyController@reject');
 Route::post('status','company\CompanyController@status');
 Route::get('u_status','company\CompanyController@u_status');
 //生成AccessToken  中间件验证请求次数
-Route::get('show','company\CompanyController@show')->middleware(['token','verify']);
+Route::get('show','company\CompanyController@show')->middleware('token');
 Route::post('accessToken','verify\PortController@accessToken');
 //获取主机ip,ua,用户注册信息
-Route::post('getIp','verify\PortController@getIp');
-Route::post('getUa','verify\PortController@getUa');
+Route::middleware('token','checktoken')->group(function(){
+    Route::get('getIp','verify\PortController@getIp');
+    Route::get('getUa','verify\PortController@getUa');
+});
+
 Route::get('getRegInfo','verify\PortController@getRegInfo');
-Route::get('aa','verify\PortController@aa')->middleware('token');
+//Route::get('aa','verify\PortController@aa')->middleware('token');
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
